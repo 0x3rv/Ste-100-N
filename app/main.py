@@ -6,12 +6,12 @@ from app.middleware.jwt_middleware import JWTMiddleware
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # Allow requests from specific origins
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.add_middleware(JWTMiddleware, excluded_routes=["/auth/signup", "/auth/login","/auth/validate-token" ])
+app.add_middleware(JWTMiddleware, excluded_routes=["/auth/signup", "/auth/login", "/auth/validate-token"])
 
 app.include_router(auth.router)
 app.include_router(service.router)

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Request
-from app.services.agent_service import send_to_gemini
+from app.services.agent_service import process_user_query
 from app.models.user import chat_collection
 from bson import ObjectId
 router = APIRouter(prefix="/gemini", tags=["Gemini"])
@@ -12,7 +12,7 @@ async def ask_gemini(request: Request):
         raise HTTPException(status_code=400, detail="Prompt required")
 
     user_email = request.state.user.get("sub")
-    response = await send_to_gemini(prompt, user_email=user_email)
+    response = await process_user_query(prompt, user_email=user_email)
     return {"response": response}
 
 
